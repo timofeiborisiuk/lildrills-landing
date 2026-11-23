@@ -1,0 +1,370 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 855px;
+  overflow: hidden;
+  background: #eee7ee url('../assets/hero/background.svg') center top / 100% 1514px no-repeat;
+  color: var(--color-text);
+}
+
+.hero__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block: 300px 40px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 1.4167;
+  letter-spacing: -0.003em;
+  text-wrap: balance;
+}
+
+.hero p {
+  max-width: 419px;
+  margin-block-start: 16px;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.003em;
+  text-wrap: balance;
+}
+
+.hero__badges {
+  display: grid;
+  grid-template-columns: minmax(0, 149.58fr) minmax(0, 168.59fr);
+  align-items: center;
+  gap: min(20.83px, 5.5vw);
+  width: 100%;
+  max-width: 339px;
+  margin-block-start: 40px;
+}
+
+.hero__badges img {
+  width: 100%;
+}
+
+.hero__artwork {
+  --reward-edge: max(-34px, calc(50% - 614px));
+
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero__image {
+  position: absolute;
+  max-width: none;
+}
+
+.hero__filters {
+  position: absolute;
+}
+
+.hero__image:is(
+  .hero__image--reward-one,
+  .hero__image--reward-two,
+  .hero__image--task-one,
+  .hero__image--task-two,
+  .hero__image--task-three
+) {
+  filter: url(#hero-card-shadow);
+}
+
+.hero__image--rewards-screen {
+  top: 193px;
+  left: -96px;
+}
+
+.hero__image--tasks-screen {
+  top: 171px;
+  right: clamp(-195px, calc(-115px - (100vw - 1280px) * 0.5), -115px);
+}
+
+.hero__image--reward-one {
+  top: 641px;
+  left: var(--reward-edge);
+}
+
+.hero__image--reward-two {
+  top: 717px;
+  left: calc(var(--reward-edge) + 84px);
+}
+
+.hero__image--task-one {
+  top: 505px;
+  left: min(calc(50% + 372px), calc(100% - 348px));
+}
+
+.hero__image--task-two {
+  top: 634px;
+  left: calc(50% + 344px + (100vw - 1440px) * 0.23);
+}
+
+.hero__image--task-three {
+  top: 733px;
+  left: calc(50% + 282px + (100vw - 1440px) * 0.32);
+}
+
+@media (min-width: 1440px) {
+  .hero {
+    background-size: max(1600px, 100%) 1514px;
+  }
+
+  .hero__image--rewards-screen {
+    left: calc(50% - 816px);
+  }
+
+  .hero__image--tasks-screen {
+    right: calc(-195px + (100vw - 1440px) * 0.667);
+  }
+
+  .hero__image--task-two {
+    left: calc(1064px + (100vw - 1440px) * 0.25);
+  }
+
+  .hero__image--task-three {
+    left: calc(1002px + (100vw - 1440px) * 0.31);
+  }
+}
+
+@media (max-width: 1239px) {
+  .hero__content {
+    padding-block-start: 200px;
+  }
+
+  .hero h1 {
+    max-width: 460px;
+    font-size: 58px;
+    line-height: 1.2;
+  }
+
+  .hero__image--task-two {
+    left: calc(100% - 500px);
+  }
+
+  .hero__image--task-three {
+    left: calc(100% - 530px);
+  }
+}
+
+@media (max-width: 959px) {
+  .hero {
+    min-height: 845px;
+    background-size: 100% 1335px;
+  }
+
+  .hero h1 {
+    max-width: 390px;
+    font-size: 50px;
+  }
+
+  .hero p {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .hero__desktop-break {
+    display: none;
+  }
+
+  .hero__image--rewards-screen {
+    left: min(-150px, calc(50vw - 571px));
+  }
+
+  .hero__image--tasks-screen {
+    right: min(-165px, calc(50vw - 590px));
+  }
+
+  .hero__artwork {
+    --reward-edge: calc(50% - 414px);
+  }
+
+  .hero__image--task-one {
+    left: calc(50% + 176px);
+  }
+
+  .hero__image--task-two {
+    left: calc(50% + 43px);
+  }
+
+  .hero__image--task-three {
+    left: calc(50% + 16px);
+  }
+}
+
+@media (max-width: 599px) {
+  .hero {
+    min-height: 870px;
+    background-size: 100% 1301px;
+  }
+
+  .hero__content {
+    padding-block-start: 150px;
+  }
+
+  .hero h1 {
+    max-width: 335px;
+    font-size: clamp(42px, 13.34vw, 50px);
+  }
+
+  .hero p {
+    max-width: 276px;
+  }
+
+  .hero__image--rewards-screen,
+  .hero__image--tasks-screen {
+    display: none;
+  }
+
+  .hero__artwork {
+    --reward-edge: calc(50% - 11px);
+  }
+
+  .hero__image--reward-one {
+    top: 502px;
+    width: 232px;
+  }
+
+  .hero__image--reward-two {
+    top: 563px;
+    left: calc(var(--reward-edge) + 68px);
+    width: 233px;
+  }
+
+  .hero__image--task-one {
+    top: 563px;
+    right: calc(50% + 19px);
+    left: auto;
+    width: 244px;
+  }
+
+  .hero__image--task-two {
+    top: 672px;
+    left: calc(50% - 130px);
+    width: 284px;
+  }
+
+  .hero__image--task-three {
+    top: 756px;
+    left: calc(50% - 155px);
+    width: 292px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero::before,
+  .hero::after {
+    position: absolute;
+    z-index: -1;
+    inset: -6% -8% 0;
+    mask-image: linear-gradient(#000 72%, transparent);
+    pointer-events: none;
+    content: '';
+  }
+
+  .hero::before {
+    background: radial-gradient(ellipse at 26% 46%, #e6c9fa, transparent 69%),
+      radial-gradient(ellipse at 77% 47%, #f5cde0, transparent 68%);
+    animation: hero-light 12s ease-in-out infinite alternate;
+  }
+
+  .hero::after {
+    background: radial-gradient(ellipse at 73% 41%, #c1e5d6, transparent 71%),
+      radial-gradient(ellipse at 19% 62%, #e5ebad, transparent 68%);
+    animation: hero-light 12s ease-in-out infinite alternate-reverse;
+  }
+
+  .hero__content h1,
+  .hero__content p,
+  .hero__content .hero__badges img {
+    animation: hero-entrance 1150ms cubic-bezier(0.33, 0.65, 0.32, 1) backwards;
+  }
+
+  .hero__content h1 {
+    --hero-entrance-offset: 34px;
+    animation-duration: 1400ms;
+    animation-timing-function: cubic-bezier(0.32, 0.32, 0.28, 1);
+  }
+
+  .hero__content p {
+    animation-delay: 280ms;
+  }
+
+  .hero__content .hero__badges img {
+    --hero-entrance-offset: 18px;
+    animation-delay: 510ms;
+  }
+
+  .hero__content .hero__badges img + img {
+    animation-delay: 640ms;
+  }
+
+  .hero__image {
+    --hero-drift-x: 6px;
+    --hero-drift-y: -12px;
+    animation: hero-drift 7s ease-in-out infinite;
+  }
+
+  .hero__image:nth-child(even) {
+    --hero-drift-x: -6px;
+    --hero-drift-y: 10px;
+    animation-duration: 8.5s;
+    animation-delay: -2s;
+  }
+
+  .hero__image:nth-child(3n) {
+    animation-duration: 9.5s;
+    animation-delay: -4s;
+  }
+
+  .hero[data-ambient='false']::before,
+  .hero[data-ambient='false']::after,
+  .hero[data-ambient='false'] .hero__image {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes hero-entrance {
+  from {
+    opacity: 0;
+    translate: 0 var(--hero-entrance-offset, 24px);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes hero-light {
+  from {
+    opacity: 0.12;
+    transform: translateX(-6%);
+  }
+
+  to {
+    opacity: 0.9;
+    transform: translateX(6%);
+  }
+}
+
+@keyframes hero-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: var(--hero-drift-x) var(--hero-drift-y); }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero__badges img {
+    border-radius: 8px;
+    transition: transform 240ms cubic-bezier(0.22, 0.8, 0.24, 1), box-shadow 240ms ease;
+  }
+
+  .hero__badges img:hover {
+    transform: translateY(-3px) scale(1.035);
+    box-shadow: 0 6px 14px rgb(46 27 75 / 20%);
+  }
+}

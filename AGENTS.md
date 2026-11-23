@@ -11,7 +11,8 @@ This repository contains the official LilDrills marketing site for lildrills.com
 
 ## Design and quality
 
-- Use the approved Figma design as the visual reference. Check layouts from 320 px through 1920 px and on wider screens.
+- Treat [Main (1440)](https://www.figma.com/design/tnUDzlVWeWW3nk6aspMjby/LILDRILLS-_LANDING_COPY?node-id=11057-151044) as the single source of truth for the current design, content, copy, imagery, and section structure. Main (1440) takes precedence whenever frames conflict.
+- Use other Figma frames only as references for responsive layout, container sizes, spacing, scaling, and reflow. Their content may be outdated. Check layouts from 320 px through 1920 px and on wider screens.
 - Use Navigo when the font files are provided. Provide suitable fallback fonts while Navigo loads or is unavailable.
 - Use semantic HTML, logical headings, descriptive page metadata, and meaningful alternative text. Support keyboard navigation, visible focus, and reduced-motion preferences.
 - Size and compress images appropriately. Reserve image dimensions to prevent layout shifts and lazy-load suitable below-the-fold images.
