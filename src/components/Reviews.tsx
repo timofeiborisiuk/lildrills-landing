@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type TouchEvent } from 'react'
 import avatar from '../assets/landing/review-avatar.png'
 import previous from '../assets/landing/review-prev.svg'
 import next from '../assets/landing/review-next.svg'
@@ -24,6 +24,8 @@ function dragTilt(offset: number) {
 }
 
 export default function Reviews() {
+  const track = useRef<HTMLDivElement>(null)
+  const touchGesture = useRef<{ id: number; x: number; y: number; axis?: 'x' | 'y' } | null>(null)
   const gesture = useRef<{ pointerId: number; startX: number; startY: number } | null>(null)
   const [active, setActive] = useState(0)
   const [dragX, setDragX] = useState(0)
@@ -34,6 +36,53 @@ export default function Reviews() {
     const timeout = window.setTimeout(() => setCardMotion(null), 720)
     return () => window.clearTimeout(timeout)
   }, [cardMotion])
+
+  useEffect(() => {
+    const element = track.current
+    if (!element) return
+
+    function moveTouch(event: globalThis.TouchEvent) {
+      const gesture = touchGesture.current
+      const touch = event.touches[0]
+      if (!gesture || event.touches.length !== 1 || touch.identifier !== gesture.id) return
+      const x = touch.clientX - gesture.x
+      const y = touch.clientY - gesture.y
+      if (!gesture.axis && Math.max(Math.abs(x), Math.abs(y)) >= 8) {
+        gesture.axis = Math.abs(x) > Math.abs(y) ? 'x' : 'y'
+      }
+      if (gesture.axis !== 'x') return
+      if (event.cancelable) event.preventDefault()
+      setDragX(x)
+    }
+
+    element.addEventListener('touchmove', moveTouch, { passive: false })
+    return () => element.removeEventListener('touchmove', moveTouch)
+  }, [])
+
+  function startTouch(event: TouchEvent<HTMLDivElement>) {
+    if (event.touches.length !== 1) {
+      touchGesture.current = null
+      setDragX(0)
+      return
+    }
+    if (cardMotion || gesture.current) return
+    const touch = event.touches[0]
+    touchGesture.current = { id: touch.identifier, x: touch.clientX, y: touch.clientY }
+  }
+
+  function finishTouch(event: TouchEvent<HTMLDivElement>) {
+    const gesture = touchGesture.current
+    if (!gesture) return
+    const touch = Array.from(event.changedTouches).find(({ identifier }) => identifier === gesture.id)
+    if (!touch) return
+    touchGesture.current = null
+    setDragX(0)
+    const x = touch.clientX - gesture.x
+    const y = touch.clientY - gesture.y
+    if (event.type === 'touchend' && gesture.axis !== 'y' && Math.abs(x) >= 28 && Math.abs(x) > Math.abs(y)) {
+      step(1, x)
+    }
+  }
 
   function step(direction: number, start = 0) {
     if (cardMotion || gesture.current) return
@@ -46,7 +95,7 @@ export default function Reviews() {
   }
 
   function startDrag(event: PointerEvent<HTMLDivElement>) {
-    if (cardMotion || event.button !== 0 || !event.isPrimary) return
+    if (cardMotion || event.pointerType === 'touch' || event.button !== 0 || !event.isPrimary) return
     gesture.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY }
     event.currentTarget.setPointerCapture(event.pointerId)
   }
@@ -60,10 +109,9 @@ export default function Reviews() {
     if (gesture.current?.pointerId !== event.pointerId) return
     const offset = event.clientX - gesture.current.startX
     const verticalOffset = event.clientY - gesture.current.startY
-    const threshold = event.pointerType === 'touch' ? 28 : 56
     gesture.current = null
     setDragX(0)
-    if (event.type === 'pointerup' && Math.abs(offset) >= threshold && Math.abs(offset) > Math.abs(verticalOffset)) {
+    if (event.type === 'pointerup' && Math.abs(offset) >= 56 && Math.abs(offset) > Math.abs(verticalOffset)) {
       step(1, offset)
     }
   }
@@ -85,6 +133,7 @@ export default function Reviews() {
           </button>
         </div>
         <div
+          ref={track}
           id="review-track"
           className="reviews__track"
           role="region"
@@ -96,6 +145,9 @@ export default function Reviews() {
             '--review-tilt': `${dragTilt(dragX)}deg`,
           } as CSSProperties}
           data-dragging={dragX !== 0}
+          onTouchStart={startTouch}
+          onTouchEnd={finishTouch}
+          onTouchCancel={finishTouch}
           onPointerDown={startDrag}
           onPointerMove={moveDrag}
           onPointerUp={finishDrag}
