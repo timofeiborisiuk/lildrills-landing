@@ -68,9 +68,9 @@ export default function Footer({ reveal, onCookiePreferences }: FooterProps) {
             </div>
             <p className="footer__copyright">© 2026 Kidberry, Inc. All rights reserved.</p>
             <ul className="footer__policies">
-              <li><a href="/terms/">Terms of use</a></li>
-              <li><a href="/privacy-policy/">Privacy policy</a></li>
-              <li><a href="/cookie-policy/">Cookies policy</a></li>
+              <li><a href="/terms/">Terms of Use</a></li>
+              <li><a href="/privacy-policy/">Privacy Policy</a></li>
+              <li><a href="/cookie-policy/">Cookie Policy</a></li>
               <li>
                 <button type="button" onClick={(event) => onCookiePreferences(event.currentTarget)}>
                   Cookie preferences

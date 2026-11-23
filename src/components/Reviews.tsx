@@ -8,17 +8,14 @@ const emily = { name: 'Emily R.', detail: 'mom of two, Boston', avatar }
 
 const reviews: { quote: string; author: { name: string; detail: string; avatar?: string } }[] = [
   { author: emily, quote: "LilDrills made chores more fun for my 10-year-old. Now she reminds me about her tasks because she loves earning coins! It's helping her become more responsible, and I love seeing her progress." },
+  { author: emily, quote: 'LilDrills made chores fun and motivating for my 10-year-old. Now she reminds me about tasks to earn coins! It teaches responsibility like a game — I recommend it to every parent.' },
   {
-    quote: 'Mornings used to be a list of reminders from me. Now my son checks what he needs to do and gets himself ready for school. Seeing him take ownership of his routine has been the best part.',
     author: { name: 'Jordan M.', detail: 'Placeholder review' },
+    quote: 'Our mornings feel calmer now. My son checks his own list before school, and I can spend breakfast talking with him instead of reminding him what to pack.',
   },
   {
-    quote: 'My daughter made a wishlist and picked a reward to save for. She checks her progress after feeding the dog, and we get to talk about what it takes to reach a goal.',
     author: { name: 'Priya K.', detail: 'Placeholder review' },
-  },
-  {
-    quote: 'We set up a short after-school routine together. My kids know what comes next, and I can see what they’ve finished when I get home. It helps us start the evening on a calmer note.',
-    author: { name: 'Alex T.', detail: 'Placeholder review' },
+    quote: 'My daughter picked a reward and decided to save up for it. She likes seeing her progress, and we get to celebrate the little things she does along the way.',
   },
 ]
 
@@ -75,7 +72,7 @@ export default function Reviews() {
         <div className="reviews__heading section-heading" data-reveal>
           <span className="section-badge">Reviews</span>
           <h2 id="reviews-title">What our<br className="reviews__break" /> users say</h2>
-          <p>Sharing little moments and experiences with LilDrills.</p>
+          <p>Sharing little moments and experiences with&nbsp;LilDrills.</p>
         </div>
         <div className="reviews__controls">
           <button type="button" aria-label="Previous review" aria-controls="review-track" onClick={() => step(-1)}>

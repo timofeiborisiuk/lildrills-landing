@@ -34,7 +34,7 @@ export default function CallToAction() {
     <section ref={section} id="download" className="call-to-action container" data-header-surface="colored" data-highlighted={isHighlighted} aria-labelledby="download-title">
       <div className="call-to-action__copy">
         <h2 id="download-title">Let the Little Wins Begin!</h2>
-        <p>Get LilDrills today and start building lasting habits together.</p>
+        <p>Big changes start with small steps. <br className="call-to-action__break" />Take the first one with LilDrills.</p>
         <div className="hero__badges">
           <img src={appStore} width="150" height="50" alt="Download on the App Store" loading="lazy" />
           <img src={googlePlay} width="169" height="50" alt="Get it on Google Play" loading="lazy" />

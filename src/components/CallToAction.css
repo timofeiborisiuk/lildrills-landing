@@ -58,7 +58,7 @@
 .call-to-action__copy {
   position: relative;
   z-index: 1;
-  max-width: min(560px, 61%);
+  max-width: min(640px, 61%);
 }
 
 .call-to-action h2 {
@@ -77,6 +77,20 @@
 
 .call-to-action .hero__badges {
   margin-top: 48px;
+}
+
+.call-to-action__break {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .call-to-action__break {
+    display: initial;
+  }
+
+  .call-to-action .hero__badges {
+    gap: 16px;
+  }
 }
 
 .call-to-action__art {

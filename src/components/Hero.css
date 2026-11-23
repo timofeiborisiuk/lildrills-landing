@@ -208,11 +208,15 @@
 
   .hero h1 {
     max-width: 335px;
-    font-size: clamp(42px, 13.34vw, 50px);
+    font-size: 42px;
   }
 
   .hero p {
     max-width: 276px;
+  }
+
+  .hero .hero__badges {
+    gap: 16px;
   }
 
   .hero__image--rewards-screen,

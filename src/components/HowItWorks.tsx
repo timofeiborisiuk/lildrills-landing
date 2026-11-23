@@ -5,9 +5,7 @@ import routines from '../assets/landing/routines.png'
 import rate from '../assets/landing/rate.png'
 import rewards from '../assets/landing/rewards.png'
 import progress from '../assets/landing/progress.png'
-import avatarOne from '../assets/landing/avatar1.png'
 import avatarTwo from '../assets/landing/avatar2.png'
-import avatarThree from '../assets/landing/avatar3.png'
 import avatarFour from '../assets/landing/avatar4.png'
 import './HowItWorks.css'
 
@@ -20,10 +18,8 @@ const cards = [
 ]
 
 const familyAvatars = [
-  { src: avatarOne, bounds: [620, 314, 115, 106] },
   { src: avatarTwo, bounds: [349, 163, 79, 79] },
-  { src: avatarThree, bounds: [491, 273, 106, 107] },
-  { src: avatarFour, bounds: [556, 84, 127, 127] },
+  { src: avatarFour, bounds: [580, 94, 95, 95] },
 ]
 
 function artworkStyle([x, y, width, height]: number[]): CSSProperties {

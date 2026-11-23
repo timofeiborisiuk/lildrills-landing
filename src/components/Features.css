@@ -94,6 +94,10 @@
 
 @media (max-width: 1100px) {
   .features {
+    overflow-x: clip;
+  }
+
+  .features {
     padding-block: 80px;
   }
 }
@@ -187,5 +191,15 @@
 
   .features__card:nth-child(3) {
     --reveal-delay: 180ms;
+  }
+}
+
+@media (max-width: 1100px) {
+  .features__card:nth-child(odd) {
+    --reveal-x: calc(-1 * min(32px, var(--page-gutter) - 4px));
+  }
+
+  .features__card:nth-child(even) {
+    --reveal-x: min(32px, calc(var(--page-gutter) - 4px));
   }
 }

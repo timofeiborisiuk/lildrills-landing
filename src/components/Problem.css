@@ -36,8 +36,13 @@
 
 .problem__track {
   overflow-x: auto;
+  scrollbar-width: none;
   padding: 8px var(--page-gutter) 11px;
   margin-top: 42px;
+}
+
+.problem__track::-webkit-scrollbar {
+  display: none;
 }
 
 .problem__track:focus-visible {
@@ -160,5 +165,37 @@
     margin-top: 40px;
     font-size: 17px;
     line-height: 24px;
+  }
+
+  .problem__steps {
+    --step-size: clamp(98px, 29vw, 112px);
+    --step-gap: clamp(42px, 12vw, 50px);
+    gap: var(--step-gap);
+  }
+
+  .problem__step {
+    width: var(--step-size);
+    height: var(--step-size);
+    grid-template-rows: 54px auto;
+    padding: 8px 5px;
+    border-radius: 18px;
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .problem__step img {
+    width: 54px;
+    height: 54px;
+  }
+
+  .problem__arrow {
+    top: calc((var(--step-size) - 60px) / 2 - 4px);
+    left: calc(var(--step-size) + var(--step-gap) / 2 - 10px);
+    width: 20px;
+    height: 60px;
+  }
+
+  .problem__steps li:nth-child(2) .problem__arrow {
+    top: calc((var(--step-size) - 60px) / 2 + 8px);
   }
 }

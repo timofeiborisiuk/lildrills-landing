@@ -242,11 +242,12 @@
 
   .reviews__layout {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: 'heading' 'track' 'controls';
+    grid-template-areas: 'heading' 'track';
     grid-template-rows: auto;
   }
 
-  .reviews__break {
+  .reviews__break,
+  .reviews__controls {
     display: none;
   }
 
@@ -257,8 +258,8 @@
 }
 
 @media (max-width: 600px) {
-  .reviews__break {
-    display: initial;
+  .reviews__heading h2 {
+    font-size: clamp(26px, 8.8vw, 34px);
   }
 
   .reviews__track {

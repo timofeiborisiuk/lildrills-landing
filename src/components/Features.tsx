@@ -10,7 +10,7 @@ const features = [
   { title: 'More Ways to Motivate', icon: target, text: 'Make everyday efforts more rewarding with ratings, coins, rewards, achievements, and optional bonuses. Give your child new reasons to stay engaged and keep trying.' },
   { title: 'Child-Friendly by Design', icon: shield, text: 'Give your child a colorful, easy-to-use space with playful avatars. Keep their experience within your Family, where only invited members can join.', tone: 'mint' },
   { title: 'Habits & Life Skills', icon: habits, text: 'Help your child practice responsibility, consistency, and independence through everyday activities, from tidying up to reading regularly.' },
-  { title: 'Better Together', icon: hearts, text: 'Give your child room to complete tasks independently while you stay involved by reviewing and rating their work. Build confidence together, without constant reminders.', tone: 'light-mint' },
+  { title: 'Better Together', icon: hearts, text: 'Stay involved in your child\'s journey, recognize their efforts, and celebrate every achievement together. Build a stronger connection through encouragement and shared progress.', tone: 'light-mint' },
   { title: 'Flexible for Your Family', icon: clock, text: "Adjust task schedules, deadlines, and priorities to fit your family's changing needs. Set the coin cost for each reward based on what motivates your child." },
 ]
 
@@ -55,7 +55,7 @@ export default function Features() {
       <div className="container">
         <div className="features__heading section-heading" data-reveal>
           <span className="section-badge">Features</span>
-          <h2 id="features-title">Built for Real Family Life</h2>
+          <h2 id="features-title">Built for Real Family&nbsp;Life</h2>
           <p>More ways to encourage your child, stay involved, and create routines that work for your family.</p>
         </div>
         <ul ref={grid} className="features__cards">
