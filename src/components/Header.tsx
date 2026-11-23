@@ -6,7 +6,7 @@ const sectionLinks = [
   { label: 'How it works', href: '#how-it-works' },
   { label: 'Features', href: '#features' },
   { label: 'Reviews', href: '#reviews' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Contact', href: '/support/' },
 ]
 
 export default function Header({ isLanding }: { isLanding: boolean }) {
@@ -94,7 +94,7 @@ export default function Header({ isLanding }: { isLanding: boolean }) {
           <ul className="site-header__links">
             {sectionLinks.map(({ label, href }) => (
               <li key={href}>
-                <a href={isLanding ? href : `/${href}`} onClick={isOpen ? closeMenu : undefined}>{label}</a>
+                <a href={!isLanding && href.startsWith('#') ? `/${href}` : href} onClick={isOpen ? closeMenu : undefined}>{label}</a>
               </li>
             ))}
           </ul>

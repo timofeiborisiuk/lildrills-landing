@@ -76,7 +76,6 @@ export default function Footer({ reveal, onCookiePreferences }: FooterProps) {
                   Cookie preferences
                 </button>
               </li>
-              <li><a href="/support/">Contact</a></li>
             </ul>
           </div>
           <p className="footer__signature">
