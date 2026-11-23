@@ -22,6 +22,8 @@ export default function Features() {
     if (!element) return
 
     const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
+    const compact = window.matchMedia('(max-width: 1100px)')
+    const cards = Array.from(element.children) as HTMLElement[]
     let frame = 0
 
     const schedule = () => {
@@ -31,6 +33,18 @@ export default function Features() {
         frame = 0
         const { top, height } = element.getBoundingClientRect()
         const viewport = window.innerHeight
+
+        if (compact.matches) {
+          const progress = cards.map((card) => {
+            const cardTop = top + card.offsetTop
+            return Math.max(0, Math.min(1, (viewport * 0.9 - cardTop) / (viewport * 0.22)))
+          })
+          cards.forEach((card, index) => {
+            card.style.setProperty('--card-scroll-progress', progress[index].toFixed(3))
+          })
+          return
+        }
+
         const distance = Math.max(viewport * 0.75, height * 0.65)
         const spread = Math.max(0, Math.min(1, 1 - (viewport - top) / distance))
         element.style.setProperty('--features-spread', spread.toFixed(3))

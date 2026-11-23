@@ -119,9 +119,14 @@
 }
 
 @media (max-width: 660px) {
+  .landing-content:has(.reviews-and-download),
+  .reviews-and-download {
+    border-radius: 0 0 30px 30px;
+  }
+
   .call-to-action {
-    min-height: 480px;
-    padding: 30px 20px 205px;
+    min-height: 470px;
+    padding: 30px 20px 195px;
     text-align: center;
   }
 
@@ -140,8 +145,8 @@
   }
 
   .call-to-action__art {
-    right: 50%;
-    width: min(85%, 340px);
-    transform: translateX(50%);
+    right: auto;
+    left: max(7.5%, calc(50% - 170px));
+    width: min(91%, 365px);
   }
 }

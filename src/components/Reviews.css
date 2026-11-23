@@ -88,6 +88,7 @@
 }
 
 .reviews__track {
+  --review-throw-distance: 34%;
   position: relative;
   display: grid;
   grid-area: track;
@@ -244,6 +245,10 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'heading' 'track';
     grid-template-rows: auto;
+  }
+
+  .reviews__track {
+    --review-throw-distance: 48%;
   }
 
   .reviews__break,

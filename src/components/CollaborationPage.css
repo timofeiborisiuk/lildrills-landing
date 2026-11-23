@@ -39,6 +39,10 @@
   padding: 50px 0 100px;
 }
 
+.collaboration-page[data-kind='partners'] .collaboration-page__content {
+  padding-block: 60px 90px;
+}
+
 .collaboration-page__illustration {
   position: relative;
   width: 130px;

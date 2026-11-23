@@ -7,10 +7,10 @@ import './CollaborationPage.css'
 const collaborationPages = {
   partners: {
     title: 'Partners & Investors',
-    intro: 'Partner with us to help families build better habits, develop life skills, and make everyday progress.',
+    intro: 'Explore opportunities to collaborate with LilDrills and help bring our vision to more families.',
     heading: 'Join the LilDrills journey!',
     copy: "Interested in partnering, investing, or becoming a LilDrills ambassador? We'd love to hear from you!",
-    note: 'Please include your name, organization, and a brief description of your interest in LilDrills.',
+    note: <>Please include your name, organization (if applicable), and a brief description<br />of your interest in LilDrills.</>,
     button: 'Email us',
     email: 'partnerships@lildrills.com',
     image: handshake,
@@ -20,7 +20,7 @@ const collaborationPages = {
     title: 'Support LilDrills',
     intro: "We're just getting started, and every bit of support helps.",
     heading: 'Be Part of Our Growth!',
-    copy: 'Your contribution supports the development of new features, improvements to LilDrills, and inspiring content for families.',
+    copy: 'Your contribution helps us improve LilDrills, develop new features, and create inspiring content for families.',
     note: 'Thank you for believing in us!',
     button: 'Support us',
     email: 'support@lildrills.com',

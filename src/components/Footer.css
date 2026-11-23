@@ -218,6 +218,19 @@
 }
 
 @media (max-width: 600px) {
+  .footer__policies {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+  }
+
+  .footer__policies li:nth-child(3) {
+    padding-inline-start: 0;
+  }
+
+  .footer__policies li:nth-child(3)::before {
+    content: none;
+  }
+
   .footer__details {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'about' 'collaborations' 'social' 'policies' 'copyright';

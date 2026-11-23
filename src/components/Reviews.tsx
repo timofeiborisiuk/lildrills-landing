@@ -24,7 +24,7 @@ function dragTilt(offset: number) {
 }
 
 export default function Reviews() {
-  const gesture = useRef<{ pointerId: number; startX: number } | null>(null)
+  const gesture = useRef<{ pointerId: number; startX: number; startY: number } | null>(null)
   const [active, setActive] = useState(0)
   const [dragX, setDragX] = useState(0)
   const [cardMotion, setCardMotion] = useState<{ index: number; direction: number; start: number } | null>(null)
@@ -47,7 +47,7 @@ export default function Reviews() {
 
   function startDrag(event: PointerEvent<HTMLDivElement>) {
     if (cardMotion || event.button !== 0 || !event.isPrimary) return
-    gesture.current = { pointerId: event.pointerId, startX: event.clientX }
+    gesture.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY }
     event.currentTarget.setPointerCapture(event.pointerId)
   }
 
@@ -59,9 +59,11 @@ export default function Reviews() {
   function finishDrag(event: PointerEvent<HTMLDivElement>) {
     if (gesture.current?.pointerId !== event.pointerId) return
     const offset = event.clientX - gesture.current.startX
+    const verticalOffset = event.clientY - gesture.current.startY
+    const threshold = event.pointerType === 'touch' ? 28 : 56
     gesture.current = null
     setDragX(0)
-    if (event.type === 'pointerup' && Math.abs(offset) >= 56) {
+    if (event.type === 'pointerup' && Math.abs(offset) >= threshold && Math.abs(offset) > Math.abs(verticalOffset)) {
       step(1, offset)
     }
   }
@@ -126,7 +128,7 @@ export default function Reviews() {
                     '--review-throw-start': `${motion.start}px`,
                     '--review-throw-tilt': `${dragTilt(motion.start)}deg`,
                     '--review-throw-arc': `${throwDirection * 7}deg`,
-                    '--review-throw-end': `${throwDirection * 34}%`,
+                    '--review-throw-end': `calc(${throwDirection} * max(var(--review-throw-distance), ${Math.abs(motion.start) + 12}px))`,
                   }),
                 } as CSSProperties}
               >

@@ -73,7 +73,7 @@ export default function Footer({ reveal, onCookiePreferences }: FooterProps) {
               <li><a href="/cookie-policy/">Cookie Policy</a></li>
               <li>
                 <button type="button" onClick={(event) => onCookiePreferences(event.currentTarget)}>
-                  Cookie preferences
+                  Cookie Preferences
                 </button>
               </li>
             </ul>
