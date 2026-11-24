@@ -1,6 +1,6 @@
 .reviews {
   overflow: hidden;
-  padding-block: 160px;
+  padding-block: 120px;
 }
 
 .reviews__layout {
@@ -108,7 +108,7 @@
   display: flex;
   grid-area: 1 / 1;
   min-width: 0;
-  min-height: 385px;
+  min-height: 340px;
   flex-direction: column;
   justify-content: space-between;
   gap: 24px;
@@ -210,8 +210,8 @@
 
 .reviews blockquote {
   margin: 0;
-  font-size: 28px;
-  line-height: 40px;
+  font-size: 24px;
+  line-height: 34px;
   letter-spacing: -0.003em;
 }
 
@@ -237,10 +237,6 @@
 }
 
 @media (max-width: 1100px) {
-  .reviews {
-    padding-block: 80px;
-  }
-
   .reviews__layout {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'heading' 'track';
@@ -272,7 +268,6 @@
   }
 
   .reviews__card {
-    min-height: 340px;
     padding: 18px;
     border-radius: 24px;
   }

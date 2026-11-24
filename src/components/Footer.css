@@ -5,9 +5,13 @@
   background: var(--color-page);
 }
 
+:root {
+  --footer-overlap: 60px;
+}
+
 .footer-anchor {
   position: relative;
-  top: -60px;
+  top: calc(-1 * var(--footer-overlap));
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -20,8 +24,8 @@
 .footer {
   min-height: 644px;
   overflow: hidden;
-  margin-top: -60px;
-  padding-top: 130px;
+  margin-top: calc(-1 * var(--footer-overlap));
+  padding-top: calc(80px + var(--footer-overlap));
   background: #eee7ee url('../assets/hero/background.svg') center / 100% 100% no-repeat;
   color: var(--color-text-purple);
 }
@@ -200,7 +204,6 @@
 @media (max-width: 800px) {
   .footer {
     min-height: auto;
-    padding-top: 110px;
   }
 
   .footer__details {

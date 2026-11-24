@@ -11,7 +11,7 @@
 .problem {
   position: relative;
   margin-top: -20px;
-  padding: 80px 0 142px;
+  padding: 80px 0 120px;
   text-align: center;
 }
 
@@ -138,7 +138,6 @@
 @media (max-width: 959px) {
   .problem {
     margin-top: -40px;
-    padding-bottom: 80px;
   }
 
   .problem__description {
