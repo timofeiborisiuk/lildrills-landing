@@ -23,8 +23,7 @@ const reviewCycles = [0, 1, 2]
 
 function getSlideOffset(track: HTMLUListElement, index: number) {
   const slide = track.children[index] as HTMLElement | undefined
-  const firstSlide = track.firstElementChild as HTMLElement | null
-  return slide && firstSlide ? slide.offsetLeft - firstSlide.offsetLeft : 0
+  return slide ? slide.offsetLeft + (slide.offsetWidth - track.clientWidth) / 2 : 0
 }
 
 export default function Reviews() {
@@ -34,66 +33,37 @@ export default function Reviews() {
     const element = track.current
     if (!element) return
 
-    const slides = Array.from(element.querySelectorAll<HTMLElement>('.reviews__slide'))
     const hasScrollEnd = Reflect.has(element, 'onscrollend')
-    const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
-    let frame = 0
     let timeout = 0
 
-    const updateCardDepth = () => {
-      frame = 0
-      if (!motion.matches) return
-
-      const stepWidth = getSlideOffset(element, 1)
-      if (!stepWidth) return
-
-      const position = element.scrollLeft / stepWidth
-      slides.forEach((slide, index) => {
-        const distance = Math.abs(index - position)
-        slide.style.setProperty('--review-depth', Math.min(distance, 2.5).toFixed(3))
-        slide.style.setProperty('--review-layer', String(Math.round(1000 / (1 + distance))))
-      })
-    }
-
-    const scheduleCardDepth = () => {
-      if (!frame && motion.matches) frame = window.requestAnimationFrame(updateCardDepth)
-    }
-
     const normalizePosition = () => {
-      const cycleWidth = getSlideOffset(element, reviews.length)
+      const start = getSlideOffset(element, reviews.length)
+      const cycleWidth = start - getSlideOffset(element, 0)
       if (!cycleWidth) return
 
-      const position = element.scrollLeft
-      if (position >= cycleWidth - 1 && position < cycleWidth * 2 - 1) return
+      const position = element.scrollLeft - start
+      if (position >= -1 && position < cycleWidth - 1) return
 
       const offset = ((position % cycleWidth) + cycleWidth) % cycleWidth
-      const destination = Math.min(offset, cycleWidth - offset) < 1 ? cycleWidth : cycleWidth + offset
+      const destination = Math.min(offset, cycleWidth - offset) < 1 ? start : start + offset
       element.scrollTo({ left: destination, behavior: 'instant' })
     }
 
     element.scrollTo({ left: getSlideOffset(element, reviews.length), behavior: 'instant' })
-    updateCardDepth()
 
     const handleScroll = () => {
-      scheduleCardDepth()
       if (!hasScrollEnd) {
         window.clearTimeout(timeout)
         timeout = window.setTimeout(normalizePosition, 160)
       }
     }
-    const observer = new ResizeObserver(scheduleCardDepth)
-    observer.observe(element)
     element.addEventListener('scroll', handleScroll, { passive: true })
     if (hasScrollEnd) element.addEventListener('scrollend', normalizePosition)
-    motion.addEventListener('change', scheduleCardDepth)
 
     return () => {
-      observer.disconnect()
-      window.cancelAnimationFrame(frame)
       window.clearTimeout(timeout)
       element.removeEventListener('scroll', handleScroll)
       element.removeEventListener('scrollend', normalizePosition)
-      motion.removeEventListener('change', scheduleCardDepth)
     }
   }, [])
 
@@ -101,10 +71,11 @@ export default function Reviews() {
     const element = track.current
     if (!element) return
 
-    const firstStep = getSlideOffset(element, 1)
+    const firstOffset = getSlideOffset(element, 0)
+    const firstStep = getSlideOffset(element, 1) - firstOffset
     if (!firstStep) return
 
-    const current = Math.round(element.scrollLeft / firstStep)
+    const current = Math.round((element.scrollLeft - firstOffset) / firstStep)
     const destination = Math.max(0, Math.min(element.children.length - 1, current + direction))
     element.scrollTo({ left: getSlideOffset(element, destination) })
   }

@@ -5,9 +5,9 @@
 
 .reviews__layout {
   display: grid;
-  grid-template-columns: minmax(245px, 336px) minmax(0, 1fr);
+  grid-template-columns: minmax(245px, 320px) minmax(0, 1fr);
   grid-template-areas: 'heading track' 'controls track';
-  column-gap: clamp(32px, 5vw, 74px);
+  column-gap: clamp(32px, 4vw, 56px);
   grid-template-rows: 1fr auto;
 }
 
@@ -86,15 +86,11 @@
 }
 
 .reviews__viewport {
-  --review-edge: max(var(--page-gutter), (100vw - var(--content-max)) / 2);
-  --review-leading-fade: clamp(24px, 2.5vw, 40px);
-  --review-trailing-fade: clamp(24px, 5vw, 85px);
+  --review-fade: clamp(24px, 12%, 110px);
   position: relative;
   isolation: isolate;
   grid-area: track;
   min-width: 0;
-  margin-inline-start: calc(-1 * var(--review-leading-fade));
-  margin-inline-end: calc(-1 * var(--review-edge));
 }
 
 .reviews__viewport::before,
@@ -102,7 +98,10 @@
   position: absolute;
   z-index: 1;
   inset-block: 0;
-  background: linear-gradient(var(--review-fade-direction), var(--color-page) 5%, transparent);
+  width: var(--review-fade);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  mask-image: linear-gradient(var(--review-fade-direction), #000, rgb(0 0 0 / 45%) 45%, transparent);
   pointer-events: none;
   content: '';
 }
@@ -110,30 +109,16 @@
 .reviews__viewport::before {
   --review-fade-direction: to right;
   inset-inline-start: 0;
-  width: var(--review-leading-fade);
 }
 
 .reviews__viewport::after {
   --review-fade-direction: to left;
   inset-inline-end: 0;
-  width: var(--review-trailing-fade);
-}
-
-@supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
-  .reviews__viewport::before,
-  .reviews__viewport::after {
-    background: linear-gradient(var(--review-fade-direction), var(--color-page) 18%, transparent 85%);
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    -webkit-mask-image: linear-gradient(var(--review-fade-direction), #000 5%, transparent);
-    mask-image: linear-gradient(var(--review-fade-direction), #000 5%, transparent);
-  }
 }
 
 .reviews__track {
-  --review-card-width: clamp(330px, 27vw, 385px);
+  --review-card-width: clamp(290px, 24vw, 344px);
   --review-gap: 24px;
-  --review-overlap: 38px;
   position: relative;
   isolation: isolate;
   display: grid;
@@ -142,10 +127,10 @@
   gap: var(--review-gap);
   min-width: 0;
   margin: 0;
-  padding: 0 var(--review-edge) 0 var(--review-leading-fade);
+  padding: 0;
+  mask-image: linear-gradient(to right, transparent, rgb(0 0 0 / 45%) calc(var(--review-fade) * 0.45), #000 var(--review-fade), #000 calc(100% - var(--review-fade)), rgb(0 0 0 / 45%) calc(100% - var(--review-fade) * 0.45), transparent);
   overflow-x: auto;
   overscroll-behavior-x: contain;
-  scroll-padding-inline-start: var(--review-leading-fade);
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   list-style: none;
@@ -162,7 +147,7 @@
 .reviews__slide {
   display: grid;
   min-width: 0;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
 }
 
 .reviews__card {
@@ -187,21 +172,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .reviews__track {
-    grid-auto-columns: calc(var(--review-card-width) - var(--review-overlap));
-    gap: 0;
     scroll-behavior: smooth;
-  }
-
-  .reviews__slide {
-    position: relative;
-    z-index: var(--review-layer, 0);
-  }
-
-  .reviews__card {
-    --card-depth: var(--review-depth, 0);
-    width: calc(100% + var(--review-overlap));
-    filter: blur(calc(var(--card-depth) * 0.75px));
-    transform: translateY(calc(var(--card-depth) * 5px)) scale(calc(1 - var(--card-depth) * 0.05));
   }
 }
 
@@ -237,14 +208,9 @@
     grid-template-rows: auto;
   }
 
-  .reviews__viewport {
-    --review-leading-fade: min(var(--page-gutter), 32px);
-  }
-
   .reviews__track {
-    --review-card-width: min(385px, calc(100% - 28px));
+    --review-card-width: min(385px, calc(100% - 64px));
     --review-gap: 16px;
-    --review-overlap: 30px;
   }
 
   .reviews__break,
@@ -260,7 +226,11 @@
 
 @media (max-width: 600px) {
   .reviews__viewport {
-    --review-trailing-fade: 20px;
+    --review-fade: 26px;
+  }
+
+  .reviews__track {
+    --review-card-width: min(385px, calc(100% - 56px));
   }
 
   .reviews__heading h2 {
