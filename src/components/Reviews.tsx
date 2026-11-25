@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent, type TouchEvent } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import avatar from '../assets/landing/review-avatar.png'
 import previous from '../assets/landing/review-prev.svg'
 import next from '../assets/landing/review-next.svg'
@@ -19,106 +19,99 @@ const reviews: { quote: string; author: { name: string; detail: string; avatar?:
   },
 ]
 
-function dragTilt(offset: number) {
-  return Math.max(-7, Math.min(7, offset * 0.035))
+const reviewCycles = [0, 1, 2]
+
+function getSlideOffset(track: HTMLUListElement, index: number) {
+  const slide = track.children[index] as HTMLElement | undefined
+  const firstSlide = track.firstElementChild as HTMLElement | null
+  return slide && firstSlide ? slide.offsetLeft - firstSlide.offsetLeft : 0
 }
 
 export default function Reviews() {
-  const track = useRef<HTMLDivElement>(null)
-  const touchGesture = useRef<{ id: number; x: number; y: number; axis?: 'x' | 'y' } | null>(null)
-  const gesture = useRef<{ pointerId: number; startX: number; startY: number } | null>(null)
-  const [active, setActive] = useState(0)
-  const [dragX, setDragX] = useState(0)
-  const [cardMotion, setCardMotion] = useState<{ index: number; direction: number; start: number } | null>(null)
+  const track = useRef<HTMLUListElement>(null)
 
-  useEffect(() => {
-    if (!cardMotion) return
-    const timeout = window.setTimeout(() => setCardMotion(null), 720)
-    return () => window.clearTimeout(timeout)
-  }, [cardMotion])
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = track.current
     if (!element) return
 
-    function moveTouch(event: globalThis.TouchEvent) {
-      const gesture = touchGesture.current
-      const touch = event.touches[0]
-      if (!gesture || event.touches.length !== 1 || touch.identifier !== gesture.id) return
-      const x = touch.clientX - gesture.x
-      const y = touch.clientY - gesture.y
-      if (!gesture.axis && Math.max(Math.abs(x), Math.abs(y)) >= 8) {
-        gesture.axis = Math.abs(x) > Math.abs(y) ? 'x' : 'y'
-      }
-      if (gesture.axis !== 'x') return
-      if (event.cancelable) event.preventDefault()
-      setDragX(x)
+    const slides = Array.from(element.querySelectorAll<HTMLElement>('.reviews__slide'))
+    const hasScrollEnd = Reflect.has(element, 'onscrollend')
+    const motion = window.matchMedia('(prefers-reduced-motion: no-preference)')
+    let frame = 0
+    let timeout = 0
+
+    const updateCardDepth = () => {
+      frame = 0
+      if (!motion.matches) return
+
+      const stepWidth = getSlideOffset(element, 1)
+      if (!stepWidth) return
+
+      const position = element.scrollLeft / stepWidth
+      slides.forEach((slide, index) => {
+        const distance = Math.abs(index - position)
+        slide.style.setProperty('--review-depth', Math.min(distance, 2.5).toFixed(3))
+        slide.style.setProperty('--review-layer', String(Math.round(1000 / (1 + distance))))
+      })
     }
 
-    element.addEventListener('touchmove', moveTouch, { passive: false })
-    return () => element.removeEventListener('touchmove', moveTouch)
+    const scheduleCardDepth = () => {
+      if (!frame && motion.matches) frame = window.requestAnimationFrame(updateCardDepth)
+    }
+
+    const normalizePosition = () => {
+      const cycleWidth = getSlideOffset(element, reviews.length)
+      if (!cycleWidth) return
+
+      const position = element.scrollLeft
+      if (position >= cycleWidth - 1 && position < cycleWidth * 2 - 1) return
+
+      const offset = ((position % cycleWidth) + cycleWidth) % cycleWidth
+      const destination = Math.min(offset, cycleWidth - offset) < 1 ? cycleWidth : cycleWidth + offset
+      element.scrollTo({ left: destination, behavior: 'instant' })
+    }
+
+    element.scrollTo({ left: getSlideOffset(element, reviews.length), behavior: 'instant' })
+    updateCardDepth()
+
+    const handleScroll = () => {
+      scheduleCardDepth()
+      if (!hasScrollEnd) {
+        window.clearTimeout(timeout)
+        timeout = window.setTimeout(normalizePosition, 160)
+      }
+    }
+    const observer = new ResizeObserver(scheduleCardDepth)
+    observer.observe(element)
+    element.addEventListener('scroll', handleScroll, { passive: true })
+    if (hasScrollEnd) element.addEventListener('scrollend', normalizePosition)
+    motion.addEventListener('change', scheduleCardDepth)
+
+    return () => {
+      observer.disconnect()
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(timeout)
+      element.removeEventListener('scroll', handleScroll)
+      element.removeEventListener('scrollend', normalizePosition)
+      motion.removeEventListener('change', scheduleCardDepth)
+    }
   }, [])
 
-  function startTouch(event: TouchEvent<HTMLDivElement>) {
-    if (event.touches.length !== 1) {
-      touchGesture.current = null
-      setDragX(0)
-      return
-    }
-    if (cardMotion || gesture.current) return
-    const touch = event.touches[0]
-    touchGesture.current = { id: touch.identifier, x: touch.clientX, y: touch.clientY }
-  }
+  function step(direction: number) {
+    const element = track.current
+    if (!element) return
 
-  function finishTouch(event: TouchEvent<HTMLDivElement>) {
-    const gesture = touchGesture.current
-    if (!gesture) return
-    const touch = Array.from(event.changedTouches).find(({ identifier }) => identifier === gesture.id)
-    if (!touch) return
-    touchGesture.current = null
-    setDragX(0)
-    const x = touch.clientX - gesture.x
-    const y = touch.clientY - gesture.y
-    if (event.type === 'touchend' && gesture.axis !== 'y' && Math.abs(x) >= 28 && Math.abs(x) > Math.abs(y)) {
-      step(1, x)
-    }
-  }
+    const firstStep = getSlideOffset(element, 1)
+    if (!firstStep) return
 
-  function step(direction: number, start = 0) {
-    if (cardMotion || gesture.current) return
-    const nextIndex = (active + direction + reviews.length) % reviews.length
-
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setCardMotion({ index: direction < 0 ? nextIndex : active, direction, start })
-    }
-    setActive(nextIndex)
-  }
-
-  function startDrag(event: PointerEvent<HTMLDivElement>) {
-    if (cardMotion || event.pointerType === 'touch' || event.button !== 0 || !event.isPrimary) return
-    gesture.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY }
-    event.currentTarget.setPointerCapture(event.pointerId)
-  }
-
-  function moveDrag(event: PointerEvent<HTMLDivElement>) {
-    if (gesture.current?.pointerId !== event.pointerId) return
-    setDragX(event.clientX - gesture.current.startX)
-  }
-
-  function finishDrag(event: PointerEvent<HTMLDivElement>) {
-    if (gesture.current?.pointerId !== event.pointerId) return
-    const offset = event.clientX - gesture.current.startX
-    const verticalOffset = event.clientY - gesture.current.startY
-    gesture.current = null
-    setDragX(0)
-    if (event.type === 'pointerup' && Math.abs(offset) >= 56 && Math.abs(offset) > Math.abs(verticalOffset)) {
-      step(1, offset)
-    }
+    const current = Math.round(element.scrollLeft / firstStep)
+    const destination = Math.max(0, Math.min(element.children.length - 1, current + direction))
+    element.scrollTo({ left: getSlideOffset(element, destination) })
   }
 
   return (
     <section id="reviews" className="reviews" aria-labelledby="reviews-title">
-      <div className="reviews__layout container" style={{ '--review-count': reviews.length } as CSSProperties}>
+      <div className="reviews__layout container">
         <div className="reviews__heading section-heading" data-reveal>
           <span className="section-badge">Reviews</span>
           <h2 id="reviews-title">What our<br className="reviews__break" /> users say</h2>
@@ -126,72 +119,37 @@ export default function Reviews() {
         </div>
         <div className="reviews__controls">
           <button type="button" aria-label="Previous review" aria-controls="review-track" onClick={() => step(-1)}>
-            <img src={previous} alt="" width="11" height="19" />
+            <img src={previous} alt="" width="9" height="16" />
           </button>
           <button type="button" aria-label="Next review" aria-controls="review-track" onClick={() => step(1)}>
-            <img src={next} alt="" width="11" height="19" />
+            <img src={next} alt="" width="9" height="16" />
           </button>
         </div>
-        <div
-          ref={track}
-          id="review-track"
-          className="reviews__track"
-          role="region"
-          aria-label="Testimonials"
-          aria-live="polite"
-          tabIndex={0}
-          style={{
-            '--review-drag': `${dragX}px`,
-            '--review-tilt': `${dragTilt(dragX)}deg`,
-          } as CSSProperties}
-          data-dragging={dragX !== 0}
-          onTouchStart={startTouch}
-          onTouchEnd={finishTouch}
-          onTouchCancel={finishTouch}
-          onPointerDown={startDrag}
-          onPointerMove={moveDrag}
-          onPointerUp={finishDrag}
-          onPointerCancel={finishDrag}
-          onLostPointerCapture={finishDrag}
-          onKeyDown={(event) => {
-            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
-            event.preventDefault()
-            step(event.key === 'ArrowRight' ? 1 : -1)
-          }}
-        >
-          {reviews.map(({ quote, author }, index) => {
-            const motion = index === cardMotion?.index ? cardMotion : null
-            const throwDirection = motion && (Math.sign(motion.start) || motion.direction)
-            return (
-              <figure
-                className="reviews__card"
-                key={quote}
-                data-front={index === active}
-                data-motion={motion ? (motion.direction < 0 ? 'untuck' : 'tuck') : undefined}
-                onAnimationEnd={(event) => {
-                  if (event.animationName === 'review-tuck' || event.animationName === 'review-untuck') {
-                    setCardMotion(null)
-                  }
-                }}
-                aria-hidden={index !== active}
-                style={{
-                  '--review-depth': (index - active + reviews.length) % reviews.length,
-                  ...(motion && throwDirection !== null && {
-                    '--review-throw-start': `${motion.start}px`,
-                    '--review-throw-tilt': `${dragTilt(motion.start)}deg`,
-                    '--review-throw-arc': `${throwDirection * 7}deg`,
-                    '--review-throw-end': `calc(${throwDirection} * max(var(--review-throw-distance), ${Math.abs(motion.start) + 12}px))`,
-                  }),
-                } as CSSProperties}
-              >
-                <blockquote><p>{quote}</p></blockquote>
-                <figcaption>
-                  {author.avatar && <img src={author.avatar} width="60" height="60" alt="" loading="lazy" draggable={false} />}
-                  <div><strong>{author.name}</strong><p>{author.detail}</p></div>
-                </figcaption>
-              </figure>
-            )
-          })}
+        <div className="reviews__viewport">
+          <ul
+            ref={track}
+            id="review-track"
+            className="reviews__track"
+            aria-label="Testimonials"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+              event.preventDefault()
+              step(event.key === 'ArrowRight' ? 1 : -1)
+            }}
+          >
+            {reviewCycles.flatMap((cycle) => reviews.map(({ quote, author }) => (
+              <li key={`${cycle}-${quote}`} className="reviews__slide" aria-hidden={cycle !== 1}>
+                <figure className="reviews__card">
+                  <blockquote><p>{quote}</p></blockquote>
+                  <figcaption>
+                    {author.avatar && <img src={author.avatar} width="60" height="60" alt="" loading="lazy" draggable={false} />}
+                    <div><strong>{author.name}</strong><p>{author.detail}</p></div>
+                  </figcaption>
+                </figure>
+              </li>
+            )))}
+          </ul>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import logo from '../assets/header/logo.png'
+import wordmark from '../assets/header/lildrills-wordmark.svg'
 import './Header.css'
 
 const sectionLinks = [
@@ -55,7 +56,12 @@ export default function Header({ isLanding }: { isLanding: boolean }) {
     }
   }
 
-  const brand = <img ref={logoImage} className="site-header__logo" src={logo} alt="LilDrills" width="150" height="38" />
+  const brand = (
+    <span className="site-header__logo">
+      <img ref={logoImage} className="site-header__logo-icon" src={logo} alt="" width="38" height="38" />
+      <img src={wordmark} alt="LilDrills" />
+    </span>
+  )
 
   return (
     <header

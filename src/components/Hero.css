@@ -198,7 +198,7 @@
 
 @media (max-width: 599px) {
   .hero {
-    min-height: 870px;
+    min-height: 936px;
     background-size: 100% 1301px;
   }
 
@@ -215,47 +215,58 @@
     max-width: 276px;
   }
 
-  .hero .hero__badges {
+  .hero__badges {
     gap: 16px;
-  }
-
-  .hero__image--rewards-screen,
-  .hero__image--tasks-screen {
-    display: none;
+    max-width: min(304px, calc(100vw - 2 * var(--page-gutter) - 40px));
   }
 
   .hero__artwork {
-    --reward-edge: calc(50% - 11px);
+    --reward-edge: calc(50% - 174px);
+    inset-block-start: 24px;
+  }
+
+  .hero__image--rewards-screen {
+    top: 443px;
+    left: calc(50% - 251px);
+    width: 246px;
+    rotate: -6deg;
+  }
+
+  .hero__image--tasks-screen {
+    top: 458px;
+    right: auto;
+    left: calc(50% + 33px);
+    width: 256px;
+    rotate: 5deg;
   }
 
   .hero__image--reward-one {
-    top: 502px;
-    width: 232px;
+    top: 750px;
+    width: 199px;
+    rotate: 1.5deg;
   }
 
   .hero__image--reward-two {
-    top: 563px;
-    left: calc(var(--reward-edge) + 68px);
-    width: 233px;
+    top: 790px;
+    left: calc(var(--reward-edge) + 17px);
+    width: 199px;
+    rotate: -1.5deg;
   }
 
   .hero__image--task-one {
-    top: 563px;
-    right: calc(50% + 19px);
-    left: auto;
-    width: 244px;
+    display: none;
   }
 
   .hero__image--task-two {
-    top: 672px;
-    left: calc(50% - 130px);
-    width: 284px;
+    top: 592px;
+    left: calc(50% - 17px);
+    width: 202px;
   }
 
   .hero__image--task-three {
-    top: 756px;
-    left: calc(50% - 155px);
-    width: 292px;
+    top: 652px;
+    left: calc(50% - 16px);
+    width: 223px;
   }
 }
 

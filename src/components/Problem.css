@@ -135,6 +135,12 @@
   }
 }
 
+@media (max-width: 1100px) {
+  .problem {
+    padding-bottom: 80px;
+  }
+}
+
 @media (max-width: 959px) {
   .problem {
     margin-top: -40px;
@@ -158,6 +164,10 @@
 @media (max-width: 599px) {
   .problem {
     margin-top: -68px;
+  }
+
+  .problem__track {
+    padding-inline: calc(var(--page-gutter) + 4px);
   }
 
   .problem__description {

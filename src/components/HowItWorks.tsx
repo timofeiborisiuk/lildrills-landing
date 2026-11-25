@@ -7,6 +7,12 @@ import rewards from '../assets/landing/rewards.png'
 import progress from '../assets/landing/progress.png'
 import avatarTwo from '../assets/landing/avatar2.png'
 import avatarFour from '../assets/landing/avatar4.png'
+import mobileFamilyAdults from '../assets/landing/how-mobile/family-adults.png'
+import mobileFamilyChildren from '../assets/landing/how-mobile/family-children.png'
+import mobileRoutines from '../assets/landing/how-mobile/routines.png'
+import mobileRate from '../assets/landing/how-mobile/rate.png'
+import mobileRewards from '../assets/landing/how-mobile/rewards.png'
+import mobileProgress from '../assets/landing/how-mobile/progress.png'
 import './HowItWorks.css'
 
 const cards = [
@@ -22,8 +28,30 @@ const familyAvatars = [
   { src: avatarFour, bounds: [580, 94, 95, 95] },
 ]
 
+const mobileArtwork = [
+  {
+    height: 294,
+    layers: [
+      { src: mobileFamilyAdults, left: 49, top: 12, width: 479, height: 564 },
+      { src: mobileFamilyChildren, left: 229.5, top: 0.5, width: 211, height: 587 },
+    ],
+  },
+  { height: 276, layers: [{ src: mobileRoutines, left: 24.5, top: 0.5, width: 621, height: 551 }] },
+  { height: 294, layers: [{ src: mobileRate, left: 23, top: 0.5, width: 624, height: 587 }] },
+  { height: 274, layers: [{ src: mobileRewards, left: 27.5, top: 0.5, width: 615, height: 547 }] },
+  { height: 255, layers: [{ src: mobileProgress, left: 76.5, top: 0.5, width: 517, height: 509 }] },
+]
+
 function artworkStyle([x, y, width, height]: number[]): CSSProperties {
   return { left: `${x / 8.48}%`, top: `${y / 4.2}%`, width: `${width / 8.48}%`, height: `${height / 4.2}%` }
+}
+
+function keepEndingTogether(text: string) {
+  const lastSpace = text.lastIndexOf(' ')
+  const split = text.lastIndexOf(' ', lastSpace - 1)
+  if (lastSpace < 0 || split < 0) return text
+
+  return <>{text.slice(0, split + 1)}<span className="how-it-works__text-ending">{text.slice(split + 1)}</span></>
 }
 
 export default function HowItWorks() {
@@ -78,8 +106,8 @@ export default function HowItWorks() {
             style={{ '--card-index': index } as CSSProperties}
           >
             <div className="how-it-works__copy">
-              <h3>{title}</h3>
-              <p>{lead && <>{lead}<br /></>}{description}</p>
+              <h3>{keepEndingTogether(title)}</h3>
+              <p>{lead && <>{lead}<br className="how-it-works__copy-break" />{' '}</>}{description}</p>
             </div>
             <span className="how-it-works__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <div className="how-it-works__artwork" aria-hidden="true">
@@ -87,6 +115,21 @@ export default function HowItWorks() {
               {index === 0 && familyAvatars.map(({ src, bounds: avatarBounds }) => (
                 <img key={src} src={src} style={artworkStyle(avatarBounds)} alt="" loading="lazy" />
               ))}
+            </div>
+            <div className="how-it-works__mobile-visual" aria-hidden="true">
+              <div className="how-it-works__mobile-artwork" style={{ aspectRatio: `335 / ${mobileArtwork[index].height}` }}>
+                {mobileArtwork[index].layers.map(({ src, left, top, width, height }) => (
+                  <img
+                    key={src}
+                    src={src}
+                    alt=""
+                    width={width}
+                    height={height}
+                    loading="lazy"
+                    style={{ left: `${left / 3.35}%`, top: `${top / mobileArtwork[index].height * 100}%`, width: `${width / 6.7}%` }}
+                  />
+                ))}
+              </div>
             </div>
           </li>
         ))}

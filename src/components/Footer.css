@@ -22,7 +22,7 @@
 }
 
 .footer {
-  min-height: 644px;
+  min-height: 629px;
   overflow: hidden;
   margin-top: calc(-1 * var(--footer-overlap));
   padding-top: calc(80px + var(--footer-overlap));
@@ -188,7 +188,7 @@
 
 @media (min-width: 801px) {
   .footer__inner {
-    height: 514px;
+    height: 499px;
   }
 
   .footer__details {
@@ -206,6 +206,10 @@
     min-height: auto;
   }
 
+  .footer__wordmark {
+    margin-bottom: -15px;
+  }
+
   .footer__details {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -217,6 +221,12 @@
 
   .footer__policies {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 660px) {
+  .landing-content:has(.reviews-and-download) ~ .footer {
+    padding-top: calc(60px + var(--footer-overlap));
   }
 }
 
@@ -237,7 +247,7 @@
   .footer__details {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'about' 'collaborations' 'social' 'policies' 'copyright';
-    gap: 32px;
+    gap: 38px;
   }
 
   .footer__signature {
@@ -246,7 +256,7 @@
   }
 
   .footer__wordmark {
-    margin-bottom: -5%;
+    margin-bottom: -3.5%;
   }
 }
 
