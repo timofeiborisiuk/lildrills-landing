@@ -13,14 +13,14 @@
 
 .collaboration-page__intro {
   padding: 140px 0 60px;
-  border-radius: 0 0 60px 60px;
+  border-radius: 0 0 var(--page-bottom-radius) var(--page-bottom-radius);
   background: #eee7ee url('../assets/hero/background.svg') center / 100% 100% no-repeat;
 }
 
 .collaboration-page h1 {
-  font-size: clamp(50px, 5.4vw, 70px);
+  font-size: 60px;
   font-weight: 400;
-  line-height: 1.4143;
+  line-height: 1.4167;
   letter-spacing: -0.003em;
   text-wrap: balance;
 }
@@ -36,11 +36,7 @@
 .collaboration-page__content {
   display: grid;
   justify-items: center;
-  padding: 50px 0 100px;
-}
-
-.collaboration-page[data-kind='partners'] .collaboration-page__content {
-  padding-block: 60px 90px;
+  padding: 60px 0 90px;
 }
 
 .collaboration-page__illustration {
@@ -152,6 +148,10 @@
 }
 
 @media (max-width: 1000px) {
+  .collaboration-page__note-break {
+    display: none;
+  }
+
   .collaboration-page h1 {
     font-size: 50px;
     line-height: 60px;
@@ -168,11 +168,6 @@
 }
 
 @media (max-width: 600px) {
-  .landing-content:has(.collaboration-page),
-  .collaboration-page__intro {
-    border-radius: 0 0 30px 30px;
-  }
-
   .collaboration-page__intro {
     padding-bottom: 40px;
   }
@@ -187,10 +182,6 @@
     font-size: 17px;
     line-height: 24px;
     letter-spacing: -0.0015em;
-  }
-
-  .collaboration-page__content {
-    padding-bottom: 80px;
   }
 
   .collaboration-page__copy h2 {

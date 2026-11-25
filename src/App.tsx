@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Problem from './components/Problem'
@@ -50,6 +50,14 @@ function App({ page }: { page?: PageKind }) {
   }
 
   const content = useRef<HTMLElement>(null)
+
+  useLayoutEffect(() => {
+    if (page || !window.location.hash) return
+
+    // On a direct visit the browser may resolve the fragment before React mounts.
+    const target = document.getElementById(window.location.hash.slice(1))
+    target?.scrollIntoView({ behavior: 'instant' })
+  }, [page])
 
   useEffect(() => {
     const elements = content.current?.querySelectorAll<HTMLElement>('[data-reveal]')

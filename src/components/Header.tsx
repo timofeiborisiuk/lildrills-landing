@@ -77,7 +77,7 @@ export default function Header({ isLanding }: { isLanding: boolean }) {
       }}
     >
       <div className="site-header__top">
-        {isLanding ? brand : <a href="/" aria-label="LilDrills home">{brand}</a>}
+        {isLanding ? brand : <a className="site-header__home-link" href="/" aria-label="LilDrills home">{brand}</a>}
         <button
           ref={menuButton}
           className="site-header__toggle"
@@ -100,11 +100,11 @@ export default function Header({ isLanding }: { isLanding: boolean }) {
           <ul className="site-header__links">
             {sectionLinks.map(({ label, href }) => (
               <li key={href}>
-                <a href={!isLanding && href.startsWith('#') ? `/${href}` : href} onClick={isOpen ? closeMenu : undefined}>{label}</a>
+                <a href={!isLanding && href.startsWith('#') ? `/${href}` : href} onClick={() => setIsOpen(false)}>{label}</a>
               </li>
             ))}
           </ul>
-          <a className="site-header__download" href={isLanding ? '#download' : '/#download'} onClick={isOpen ? closeMenu : undefined}>
+          <a className="site-header__download" href={isLanding ? '#download' : '/#download'} onClick={() => setIsOpen(false)}>
             Download the App
           </a>
         </div>

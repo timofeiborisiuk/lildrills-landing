@@ -1,7 +1,8 @@
 .landing-content {
+  --page-bottom-radius: 60px;
   position: relative;
   z-index: 1;
-  border-radius: 0 0 60px 60px;
+  border-radius: 0 0 var(--page-bottom-radius) var(--page-bottom-radius);
   background: var(--color-page);
 }
 
@@ -225,7 +226,11 @@
 }
 
 @media (max-width: 660px) {
-  .landing-content:has(.reviews-and-download) ~ .footer {
+  .landing-content {
+    --page-bottom-radius: 30px;
+  }
+
+  .footer {
     padding-top: calc(60px + var(--footer-overlap));
   }
 }

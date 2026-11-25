@@ -8,7 +8,7 @@
   position: relative;
   z-index: 1;
   padding-bottom: 80px;
-  border-radius: 0 0 60px 60px;
+  border-radius: inherit;
   background: var(--color-page);
 }
 
@@ -121,11 +121,6 @@
 @media (max-width: 660px) {
   .reviews-and-download {
     padding-bottom: 70px;
-  }
-
-  .landing-content:has(.reviews-and-download),
-  .reviews-and-download {
-    border-radius: 0 0 30px 30px;
   }
 
   .call-to-action {

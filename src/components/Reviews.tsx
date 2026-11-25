@@ -1,12 +1,11 @@
 import { useLayoutEffect, useRef } from 'react'
-import avatar from '../assets/landing/review-avatar.png'
 import previous from '../assets/landing/review-prev.svg'
 import next from '../assets/landing/review-next.svg'
 import './Reviews.css'
 
-const emily = { name: 'Emily R.', detail: 'mom of two, Boston', avatar }
+const emily = { name: 'Emily R.', detail: 'mom of two, Boston' }
 
-const reviews: { quote: string; author: { name: string; detail: string; avatar?: string } }[] = [
+const reviews = [
   { author: emily, quote: "LilDrills made chores more fun for my 10-year-old. Now she reminds me about her tasks because she loves earning coins! It's helping her become more responsible, and I love seeing her progress." },
   { author: emily, quote: 'LilDrills made chores fun and motivating for my 10-year-old. Now she reminds me about tasks to earn coins! It teaches responsibility like a game — I recommend it to every parent.' },
   {
@@ -23,7 +22,13 @@ const reviewCycles = [0, 1, 2]
 
 function getSlideOffset(track: HTMLUListElement, index: number) {
   const slide = track.children[index] as HTMLElement | undefined
-  return slide ? slide.offsetLeft + (slide.offsetWidth - track.clientWidth) / 2 : 0
+  if (!slide) return 0
+
+  const isCentered = getComputedStyle(slide).scrollSnapAlign === 'center'
+  if (isCentered) return slide.offsetLeft + (slide.offsetWidth - track.clientWidth) / 2
+
+  const startPadding = Number.parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0
+  return slide.offsetLeft - startPadding
 }
 
 export default function Reviews() {
@@ -86,14 +91,14 @@ export default function Reviews() {
         <div className="reviews__heading section-heading" data-reveal>
           <span className="section-badge">Reviews</span>
           <h2 id="reviews-title">What our<br className="reviews__break" /> users say</h2>
-          <p>Sharing little moments and experiences with&nbsp;LilDrills.</p>
+          <p>Sharing little moments and <br className="reviews__description-break" />experiences with&nbsp;LilDrills.</p>
         </div>
         <div className="reviews__controls">
           <button type="button" aria-label="Previous review" aria-controls="review-track" onClick={() => step(-1)}>
-            <img src={previous} alt="" width="9" height="16" />
+            <img src={previous} alt="" width="8" height="14" />
           </button>
           <button type="button" aria-label="Next review" aria-controls="review-track" onClick={() => step(1)}>
-            <img src={next} alt="" width="9" height="16" />
+            <img src={next} alt="" width="8" height="14" />
           </button>
         </div>
         <div className="reviews__viewport">
@@ -114,7 +119,6 @@ export default function Reviews() {
                 <figure className="reviews__card">
                   <blockquote><p>{quote}</p></blockquote>
                   <figcaption>
-                    {author.avatar && <img src={author.avatar} width="60" height="60" alt="" loading="lazy" draggable={false} />}
                     <div><strong>{author.name}</strong><p>{author.detail}</p></div>
                   </figcaption>
                 </figure>

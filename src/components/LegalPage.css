@@ -218,9 +218,55 @@
   }
 
   .legal-page__toc-mobile summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 2px;
     color: var(--color-text-purple);
     font-weight: 500;
+    list-style: none;
     cursor: pointer;
+  }
+
+  .legal-page__toc-mobile summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .legal-page__toc-mobile summary span {
+    translate: 0 -1px;
+  }
+
+  .legal-page__toc-mobile summary::before {
+    width: 8px;
+    height: 14px;
+    flex: none;
+    background: url('../assets/landing/review-next.svg') center / contain no-repeat;
+    content: '';
+  }
+
+  .legal-page__toc-mobile[open] summary::before {
+    rotate: 90deg;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .legal-page__toc-mobile summary::before {
+      transition: rotate 240ms ease;
+    }
+
+    @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+      .legal-page__toc-mobile::details-content {
+        interpolate-size: allow-keywords;
+        block-size: 0;
+        overflow: clip;
+        opacity: 0;
+        transition: block-size 300ms ease, opacity 220ms ease, content-visibility 300ms allow-discrete;
+      }
+
+      .legal-page__toc-mobile[open]::details-content {
+        block-size: auto;
+        opacity: 1;
+      }
+    }
   }
 
   .legal-page__toc-mobile ol {

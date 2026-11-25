@@ -10,7 +10,7 @@ const collaborationPages = {
     intro: 'Explore opportunities to collaborate with LilDrills and help bring our vision to more families.',
     heading: 'Join the LilDrills journey!',
     copy: "Interested in partnering, investing, or becoming a LilDrills ambassador? We'd love to hear from you!",
-    note: <>Please include your name, organization (if applicable), and a brief description<br />of your interest in LilDrills.</>,
+    note: <>Please include your name, organization (if applicable), and a brief description<br className="collaboration-page__note-break" />{' '}of your interest in LilDrills.</>,
     button: 'Email us',
     email: 'partnerships@lildrills.com',
     image: handshake,

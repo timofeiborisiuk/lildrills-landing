@@ -38,6 +38,10 @@ html {
   display: contents;
 }
 
+.site-header__home-link {
+  display: flex;
+}
+
 .site-header__logo {
   display: inline-flex;
   align-items: center;
