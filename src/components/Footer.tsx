@@ -92,7 +92,9 @@ export default function Footer({ reveal, onCookiePreferences }: FooterProps) {
               <img src={heart} alt="love" width="24" height="24" loading="lazy" />
             </span> on planet Earth
           </p>
-          <img className="footer__wordmark" src={wordmark} alt="LilDrills" width="1280" height="276" loading="lazy" />
+          <div className="footer__wordmark-crop">
+            <img className="footer__wordmark" src={wordmark} alt="LilDrills" width="1280" height="276" loading="lazy" />
+          </div>
         </div>
       </footer>
     </>

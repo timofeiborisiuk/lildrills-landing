@@ -24,11 +24,7 @@ function getSlideOffset(track: HTMLUListElement, index: number) {
   const slide = track.children[index] as HTMLElement | undefined
   if (!slide) return 0
 
-  const isCentered = getComputedStyle(slide).scrollSnapAlign === 'center'
-  if (isCentered) return slide.offsetLeft + (slide.offsetWidth - track.clientWidth) / 2
-
-  const startPadding = Number.parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0
-  return slide.offsetLeft - startPadding
+  return slide.offsetLeft + (slide.offsetWidth - track.clientWidth) / 2
 }
 
 export default function Reviews() {
@@ -94,10 +90,10 @@ export default function Reviews() {
           <p>Sharing little moments and <br className="reviews__description-break" />experiences with&nbsp;LilDrills.</p>
         </div>
         <div className="reviews__controls">
-          <button type="button" aria-label="Previous review" aria-controls="review-track" onClick={() => step(-1)}>
+          <button type="button" aria-label="Move reviews left" aria-controls="review-track" onClick={() => step(1)}>
             <img src={previous} alt="" width="8" height="14" />
           </button>
-          <button type="button" aria-label="Next review" aria-controls="review-track" onClick={() => step(1)}>
+          <button type="button" aria-label="Move reviews right" aria-controls="review-track" onClick={() => step(-1)}>
             <img src={next} alt="" width="8" height="14" />
           </button>
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import illustration from '../assets/landing/cta.png'
+import illustration from '../assets/landing/cta-trophy.webp'
 import appStore from '../assets/hero/app-store.svg'
 import googlePlay from '../assets/hero/google-play.svg'
 import './CallToAction.css'
@@ -40,7 +40,7 @@ export default function CallToAction() {
           <img src={googlePlay} width="169" height="50" alt="Get it on Google Play" loading="lazy" />
         </div>
       </div>
-      <img className="call-to-action__art" src={illustration} alt="" width="472" height="289" loading="lazy" />
+      <img className="call-to-action__art" src={illustration} alt="" width="1233" height="1233" loading="lazy" />
     </section>
   )
 }

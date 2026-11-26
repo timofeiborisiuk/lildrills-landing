@@ -85,13 +85,13 @@
 }
 
 .hero__image--reward-one {
-  top: 641px;
-  left: var(--reward-edge);
+  top: 639px;
+  left: calc(var(--reward-edge) - 10px);
 }
 
 .hero__image--reward-two {
-  top: 717px;
-  left: calc(var(--reward-edge) + 84px);
+  top: 708px;
+  left: calc(var(--reward-edge) + 79px);
 }
 
 .hero__image--task-one {
@@ -241,15 +241,16 @@
   }
 
   .hero__image--reward-one {
-    top: 750px;
-    width: 199px;
+    top: 748px;
+    left: calc(var(--reward-edge) - 7px);
+    width: 211px;
     rotate: 1.5deg;
   }
 
   .hero__image--reward-two {
-    top: 790px;
-    left: calc(var(--reward-edge) + 17px);
-    width: 199px;
+    top: 784px;
+    left: calc(var(--reward-edge) + 14px);
+    width: 211px;
     rotate: -1.5deg;
   }
 

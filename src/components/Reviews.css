@@ -216,7 +216,8 @@
 
   .reviews__heading {
     max-width: 420px;
-    margin-bottom: 40px;
+    margin: 0 auto 40px;
+    text-align: center;
   }
 }
 
@@ -238,12 +239,7 @@
     --review-card-width: calc(100% - 48px);
     --review-gap: var(--page-gutter);
     padding-inline: var(--page-gutter);
-    scroll-padding-inline-start: var(--page-gutter);
     mask-image: none;
-  }
-
-  .reviews__slide {
-    scroll-snap-align: start;
   }
 
   .reviews__heading h2 {

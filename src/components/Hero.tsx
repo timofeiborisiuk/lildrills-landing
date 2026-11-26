@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import appStore from '../assets/hero/app-store.svg'
 import googlePlay from '../assets/hero/google-play.svg'
-import rewardsScreen from '../assets/hero/rewards-screen.png'
-import tasksScreen from '../assets/hero/tasks-screen.png'
-import rewardOne from '../assets/hero/reward-one.png'
-import rewardTwo from '../assets/hero/reward-two.png'
-import taskCardOne from '../assets/hero/task-card-one.png'
-import taskCardTwo from '../assets/hero/task-card-two.png'
-import taskCardThree from '../assets/hero/task-card-three.png'
+import rewardsScreen from '../assets/hero/rewards-screen.webp'
+import tasksScreen from '../assets/hero/tasks-screen.webp'
+import rewardOne from '../assets/hero/reward-one.webp'
+import rewardTwo from '../assets/hero/reward-two.webp'
+import taskCardOne from '../assets/hero/task-card-one.webp'
+import taskCardTwo from '../assets/hero/task-card-two.webp'
+import taskCardThree from '../assets/hero/task-card-three.webp'
 import './Hero.css'
 
 const artwork = [
   { name: 'rewards-screen', src: rewardsScreen, width: 360, height: 552 },
   { name: 'tasks-screen', src: tasksScreen, width: 370, height: 569 },
-  { name: 'reward-two', src: rewardTwo, width: 287, height: 123 },
-  { name: 'reward-one', src: rewardOne, width: 286, height: 104 },
+  { name: 'reward-two', src: rewardTwo, width: 304, height: 140 },
+  { name: 'reward-one', src: rewardOne, width: 304, height: 121 },
   { name: 'task-one', src: taskCardOne, width: 288, height: 124 },
   { name: 'task-two', src: taskCardTwo, width: 288, height: 124 },
   { name: 'task-three', src: taskCardThree, width: 316, height: 121 },
@@ -47,7 +47,7 @@ export default function Hero() {
         ))}
         <svg className="hero__filters" width="0" height="0">
           <filter id="hero-card-shadow" x="-20%" y="-40%" width="140%" height="180%" colorInterpolationFilters="sRGB">
-            {/* Remove the clipped shadow baked into the PNG before adding a new one. */}
+            {/* Remove the clipped shadow baked into the asset before adding a new one. */}
             <feComponentTransfer>
               <feFuncA type="linear" slope="1.25" intercept="-0.25" />
             </feComponentTransfer>

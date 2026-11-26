@@ -23,7 +23,6 @@
 }
 
 .footer {
-  min-height: 629px;
   overflow: hidden;
   margin-top: calc(-1 * var(--footer-overlap));
   padding-top: calc(80px + var(--footer-overlap));
@@ -117,7 +116,7 @@
   justify-content: center;
   align-items: center;
   gap: 3px;
-  margin: 46px 0 17px;
+  margin: 54px 0 10px;
   text-align: center;
   font-size: 17px;
   font-weight: 500;
@@ -183,15 +182,16 @@
   }
 }
 
+.footer__wordmark-crop {
+  aspect-ratio: 1280 / 229.5;
+  overflow: hidden;
+}
+
 .footer__wordmark {
   width: 100%;
 }
 
 @media (min-width: 801px) {
-  .footer__inner {
-    height: 499px;
-  }
-
   .footer__details {
     min-height: 181px;
   }
@@ -203,14 +203,6 @@
 }
 
 @media (max-width: 800px) {
-  .footer {
-    min-height: auto;
-  }
-
-  .footer__wordmark {
-    margin-bottom: -15px;
-  }
-
   .footer__details {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -256,13 +248,10 @@
   }
 
   .footer__signature {
-    margin-top: 55px;
+    margin-top: 63px;
     font-size: clamp(13px, 4vw, 17px);
   }
 
-  .footer__wordmark {
-    margin-bottom: -3.5%;
-  }
 }
 
 .footer__social-link {
