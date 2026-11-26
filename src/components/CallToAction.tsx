@@ -37,7 +37,9 @@ export default function CallToAction() {
         <p>Big changes start with small steps. <br className="call-to-action__break" />Take the first one with LilDrills.</p>
         <div className="hero__badges">
           <img src={appStore} width="150" height="50" alt="Download on the App Store" loading="lazy" />
-          <img src={googlePlay} width="169" height="50" alt="Get it on Google Play" loading="lazy" />
+          <a href="https://play.google.com/store/apps/details?id=com.lildrillsapp.app">
+            <img src={googlePlay} width="169" height="50" alt="Get it on Google Play" loading="lazy" />
+          </a>
         </div>
       </div>
       <img className="call-to-action__art" src={illustration} alt="" width="1233" height="1233" loading="lazy" />

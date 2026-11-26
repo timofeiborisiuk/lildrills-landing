@@ -63,7 +63,9 @@ export default function Hero() {
         </p>
         <div className="hero__badges">
           <img src={appStore} width="150" height="50" alt="Download on the App Store" />
-          <img src={googlePlay} width="169" height="50" alt="Get it on Google Play" />
+          <a href="https://play.google.com/store/apps/details?id=com.lildrillsapp.app">
+            <img src={googlePlay} width="169" height="50" alt="Get it on Google Play" />
+          </a>
         </div>
       </div>
     </section>

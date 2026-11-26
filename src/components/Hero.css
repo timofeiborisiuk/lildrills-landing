@@ -315,7 +315,7 @@
     animation-delay: 510ms;
   }
 
-  .hero__content .hero__badges img + img {
+  .hero__content .hero__badges a img {
     animation-delay: 640ms;
   }
 
@@ -374,6 +374,10 @@
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero__badges a:hover {
+    translate: none;
+  }
+
   .hero__badges img {
     border-radius: 8px;
     transition: transform 240ms cubic-bezier(0.22, 0.8, 0.24, 1), box-shadow 240ms ease;
